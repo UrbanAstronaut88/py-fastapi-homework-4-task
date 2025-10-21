@@ -1,20 +1,16 @@
 from datetime import date
-from fastapi import Form, UploadFile, HTTPException
+from fastapi import UploadFile
 from pydantic import BaseModel, field_validator, ConfigDict
-from validation import (
-    validate_name,
-    validate_gender,
-    validate_birth_date
-)
+from validation import validate_name, validate_gender, validate_birth_date, validate_image
 
 
 class ProfileCreateSchema(BaseModel):
-    first_name: str = Form(...)
-    last_name: str = Form(...)
-    gender: str = Form(...)
-    date_of_birth: date = Form(...)
-    info: str = Form(...)
-    avatar: str = Form(...)
+    first_name: str
+    last_name: str
+    gender: str
+    date_of_birth: date
+    info: str
+    avatar: UploadFile
 
     @field_validator("first_name", "last_name")
     def validate_name_fields(cls, v):
@@ -26,12 +22,18 @@ class ProfileCreateSchema(BaseModel):
 
     @field_validator("date_of_birth")
     def validate_dob(cls, v):
-        return validate_birth_date(v)
+        validate_birth_date(v)
+        return v
 
     @field_validator("info")
     def validate_info(cls, v):
         if not v or not v.strip():
-            raise ValueError("Info field cannot be empty.")
+            raise ValueError("Info field cannot be empty or contain only spaces.")
+        return v
+
+    @field_validator("avatar")
+    def validate_avatar(cls, v):
+        validate_image(v)
         return v
 
 
