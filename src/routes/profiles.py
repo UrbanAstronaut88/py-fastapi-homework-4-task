@@ -87,7 +87,6 @@ async def validate_users_and_permissions(db: AsyncSession, user_id: int, current
     return user, current_user
 
 
-
 # --- helper: upload avatar and return key + URL ---
 async def upload_avatar(user_id: int, avatar: UploadFile, s3_client: S3StorageInterface):
     filename = avatar.filename or "avatar"
