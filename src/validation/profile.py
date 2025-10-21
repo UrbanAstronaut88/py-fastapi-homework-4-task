@@ -3,14 +3,17 @@ from datetime import date
 from io import BytesIO
 
 from PIL import Image
-from fastapi import UploadFile
+from fastapi import UploadFile, HTTPException
 
 from database.models.accounts import GenderEnum
 
 
-def validate_name(name: str):
-    if re.search(r'^[A-Za-z]*$', name) is None:
-        raise ValueError(f'{name} contains non-english letters')
+def validate_name(name: str) -> str:
+    if not name:
+        raise HTTPException(status_code=422, detail="Name cannot be empty.")
+    if not all(c.isalpha() or c.isspace() for c in name):
+        raise HTTPException(status_code=422, detail=f"{name} contains non-english letters")
+    return name.lower()
 
 
 def validate_image(avatar: UploadFile) -> None:
@@ -31,9 +34,14 @@ def validate_image(avatar: UploadFile) -> None:
         raise ValueError("Invalid image format")
 
 
-def validate_gender(gender: str) -> None:
-    if gender not in GenderEnum.__members__.values():
-        raise ValueError(f"Gender must be one of: {', '.join(g.value for g in GenderEnum)}")
+
+def validate_gender(gender: str) -> str:
+    valid_values = [g.value for g in GenderEnum]
+
+    if gender not in valid_values:
+        raise ValueError(f"Gender must be one of: {', '.join(valid_values)}")
+
+    return gender
 
 
 def validate_birth_date(birth_date: date) -> None:
