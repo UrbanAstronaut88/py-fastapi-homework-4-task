@@ -1,4 +1,4 @@
-FROM golang:1.22
+FROM golang:1.24
 
 # Install necessary dependencies
 RUN apt update && apt install -y  \

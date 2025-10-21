@@ -74,15 +74,15 @@ services:
 
   mailhog:
     restart: always
-    image: mailhog/mailhog:latest
+    build:
+      context: .
+      dockerfile: ./docker/mailhog/Dockerfile
     container_name: mailhog_theater
     ports:
       - "8025:8025"
       - "1025:1025"
     env_file:
       - .env
-#    environment:
-#      MH_AUTH_FILE: /mailhog.auth
     volumes:
       - ./commands:/commands
     command: ["/bin/sh", "-c", "/commands/setup_mailhog_auth.sh && MailHog"]
