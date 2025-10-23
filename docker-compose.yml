@@ -111,7 +111,7 @@ services:
       context: .
       dockerfile: docker/minio_mc/Dockerfile
     container_name: minio_mc_theater
-    command: ["/bin/sh", "-c", "/commands/setup_minio.sh && tail -f /dev/null"]
+    command: ["/bin/sh", "-c", "/commands/setup_minio.sh"]
     depends_on:
       minio:
         condition: service_healthy
@@ -119,6 +119,7 @@ services:
       - .env
     networks:
       - theater_network
+    restart: "no"
 
 volumes:
   postgres_theater_data:

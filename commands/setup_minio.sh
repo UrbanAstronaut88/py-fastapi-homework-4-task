@@ -20,4 +20,5 @@ echo "Getting policy info..."
 mc anonymous get minio/"$MINIO_STORAGE"
 
 echo "MinIO configuration completed!"
+tail -f /dev/null
 exit 0
