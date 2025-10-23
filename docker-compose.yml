@@ -83,8 +83,6 @@ services:
       - "1025:1025"
     env_file:
       - .env
-    volumes:
-      - ./commands:/commands
     command: ["/bin/sh", "-c", "/commands/setup_mailhog_auth.sh && MailHog"]
     networks:
       - theater_network
