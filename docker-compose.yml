@@ -119,7 +119,6 @@ services:
       - .env
     networks:
       - theater_network
-    restart: "no"
 
 volumes:
   postgres_theater_data:
