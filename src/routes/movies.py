@@ -4,12 +4,13 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
 
-from database import get_db, MovieModel
-from database import (
+from database import get_db
+from database.models.movies import (
     CountryModel,
     GenreModel,
     ActorModel,
-    LanguageModel
+    LanguageModel,
+    MovieModel
 )
 from schemas import (
     MovieListResponseSchema,

@@ -5,8 +5,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 import os
 
-from database import get_db, UserModel, UserProfileModel
-from database.models.accounts import GenderEnum
+from database import get_db
+from database.models.accounts import GenderEnum, UserModel, UserProfileModel
 from schemas.profiles import ProfileResponseSchema, ProfileCreateSchema
 from storages import S3StorageInterface
 from config.dependencies import get_s3_storage_client, get_jwt_auth_manager

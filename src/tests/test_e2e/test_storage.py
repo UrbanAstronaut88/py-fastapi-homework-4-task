@@ -4,7 +4,7 @@ from io import BytesIO
 from PIL import Image
 from sqlalchemy import select
 
-from database import UserModel, UserProfileModel
+from database.models.accounts import UserModel, UserProfileModel
 
 
 @pytest.mark.e2e

@@ -9,7 +9,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from tqdm import tqdm
 
 from config import get_settings
-from database import (
+from database.models.movies import (
     CountryModel,
     GenreModel,
     ActorModel,
@@ -17,8 +17,9 @@ from database import (
     ActorsMoviesModel,
     LanguageModel,
     MoviesLanguagesModel,
-    MovieModel, UserGroupModel, UserGroupEnum
+    MovieModel,
 )
+from database.models.accounts import UserGroupModel, UserGroupEnum
 from database import get_db_contextmanager
 
 CHUNK_SIZE = 1000

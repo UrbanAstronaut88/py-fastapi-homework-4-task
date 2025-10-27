@@ -18,10 +18,10 @@ class BaseAppSettings(BaseSettings):
 
     LOGIN_TIME_DAYS: int = 7
 
-    EMAIL_HOST: str = os.getenv("EMAIL_HOST", "host")
+    EMAIL_HOST: str = os.getenv("EMAIL_HOST", "mailhog")
     EMAIL_PORT: int = int(os.getenv("EMAIL_PORT", 25))
-    EMAIL_HOST_USER: str = os.getenv("EMAIL_HOST_USER", "testuser")
-    EMAIL_HOST_PASSWORD: str = os.getenv("EMAIL_HOST_PASSWORD", "test_password")
+    EMAIL_HOST_USER: str = os.getenv("EMAIL_HOST_USER", "")
+    EMAIL_HOST_PASSWORD: str = os.getenv("EMAIL_HOST_PASSWORD", "")
     EMAIL_USE_TLS: bool = os.getenv("EMAIL_USE_TLS", "False").lower() == "true"
     MAILHOG_API_PORT: int = os.getenv("MAILHOG_API_PORT", 8025)
 
@@ -43,8 +43,8 @@ class Settings(BaseAppSettings):
     POSTGRES_DB_PORT: int = int(os.getenv("POSTGRES_DB_PORT", 5432))
     POSTGRES_DB: str = os.getenv("POSTGRES_DB", "test_db")
 
-    SECRET_KEY_ACCESS: str = os.getenv("SECRET_KEY_ACCESS", os.urandom(32))
-    SECRET_KEY_REFRESH: str = os.getenv("SECRET_KEY_REFRESH", os.urandom(32))
+    SECRET_KEY_ACCESS: str = os.getenv("SECRET_KEY_ACCESS", os.urandom(32).hex())
+    SECRET_KEY_REFRESH: str = os.getenv("SECRET_KEY_REFRESH", os.urandom(32).hex())
     JWT_SIGNING_ALGORITHM: str = os.getenv("JWT_SIGNING_ALGORITHM", "HS256")
 
 
@@ -52,6 +52,13 @@ class TestingSettings(BaseAppSettings):
     SECRET_KEY_ACCESS: str = "SECRET_KEY_ACCESS"
     SECRET_KEY_REFRESH: str = "SECRET_KEY_REFRESH"
     JWT_SIGNING_ALGORITHM: str = "HS256"
+
+    """ for test """
+    EMAIL_HOST: str = "localhost"
+    EMAIL_PORT: int = 1025
+    EMAIL_USE_TLS: bool = False
+    EMAIL_HOST_USER: str = "noreply@mate.com"
+    EMAIL_HOST_PASSWORD: str = ""
 
     def model_post_init(self, __context: dict[str, Any] | None = None) -> None:
         object.__setattr__(self, 'PATH_TO_DB', ":memory:")

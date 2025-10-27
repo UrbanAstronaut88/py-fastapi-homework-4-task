@@ -1,10 +1,12 @@
+import logging      #
 from fastapi import FastAPI
-
 from routes import (
     movie_router,
     accounts_router,
     profiles_router
 )
+
+logging.basicConfig(level=logging.DEBUG)       # временно, для отладки
 
 app = FastAPI(
     title="Movies homework",
